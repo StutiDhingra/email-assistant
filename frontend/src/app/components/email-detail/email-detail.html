@@ -1,0 +1,133 @@
+<div class="p-8 max-w-5xl mx-auto animate-fade-in">
+    <!-- Back Link -->
+    <div class="mb-8">
+        <a routerLink="/inbox"
+            class="text-zinc-400 hover:text-white flex items-center gap-2 font-medium transition-colors group w-fit">
+            <span class="group-hover:-translate-x-1 transition-transform">←</span> Back to Inbox
+        </a>
+    </div>
+
+    @if (loading) {
+    <div class="text-center py-20">
+        <div class="w-12 h-12 border-4 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin mx-auto mb-4">
+        </div>
+        <p class="text-zinc-500">Retrieving secure message...</p>
+    </div>
+    } @else if (email) {
+    <div class="bg-surface-card border border-white/5 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-sm">
+        <!-- Header -->
+        <div class="p-8 border-b border-white/5 bg-white/5">
+            <div class="flex justify-between items-start mb-6">
+                <h1 class="text-3xl font-bold text-white tracking-tight leading-tight">{{ email.subject }}</h1>
+                @if (email.category) {
+                <span
+                    class="px-4 py-1.5 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-full text-sm font-medium shadow-[0_0_15px_rgba(99,102,241,0.2)]">
+                    {{ email.category }}
+                </span>
+                }
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div
+                    class="w-12 h-12 rounded-full bg-gradient-to-br from-zinc-700 to-zinc-800 border border-white/10 flex items-center justify-center font-bold text-lg text-zinc-300 shadow-inner">
+                    {{ email.sender[0].toUpperCase() }}
+                </div>
+                <div>
+                    <div class="font-medium text-zinc-200 text-lg">{{ email.sender }}</div>
+                    <div class="text-zinc-500 text-sm">{{ email.timestamp | date:'medium' }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Body -->
+        <div class="p-10 prose prose-invert max-w-none text-zinc-300 leading-relaxed">
+            {{ email.body }}
+        </div>
+
+        <!-- Action Items -->
+        @if (email.action_items && email.action_items.length > 0) {
+        <div class="mx-8 mb-8 p-6 bg-yellow-500/5 border border-yellow-500/20 rounded-xl relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-1 h-full bg-yellow-500/50"></div>
+            <h3 class="text-yellow-200 font-bold mb-4 flex items-center gap-2 text-lg">
+                <span class="text-xl">⚡</span> Detected Action Items
+            </h3>
+            <ul class="space-y-3">
+                @for (item of email.action_items; track $index) {
+                <li class="flex items-start gap-3 text-yellow-100/80 group">
+                    <input type="checkbox"
+                        class="mt-1.5 rounded border-yellow-500/30 bg-yellow-500/10 text-yellow-500 focus:ring-yellow-500/50 cursor-pointer">
+                    <span class="group-hover:text-yellow-100 transition-colors">{{ item.task }} <span
+                            class="text-yellow-500/70 text-sm ml-2 font-mono bg-yellow-500/10 px-2 py-0.5 rounded border border-yellow-500/10">(Due:
+                            {{ item.deadline }})</span></span>
+                </li>
+                }
+            </ul>
+        </div>
+        }
+
+        <!-- Actions -->
+        <div class="p-6 border-t border-white/5 flex gap-4 bg-black/20">
+            <button (click)="openReply()"
+                class="px-6 py-2.5 bg-indigo-600 text-white rounded-xl hover:bg-indigo-500 font-medium transition-all duration-300 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 flex items-center gap-2">
+                <span>↩️</span> Reply
+            </button>
+            <button
+                class="px-6 py-2.5 bg-white/5 border border-white/10 text-zinc-300 rounded-xl hover:bg-white/10 hover:text-white font-medium transition-all duration-300">
+                Forward
+            </button>
+            <button
+                class="px-6 py-2.5 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl hover:bg-red-500/20 hover:text-red-300 font-medium transition-all duration-300 ml-auto flex items-center gap-2">
+                <span>🗑️</span> Delete
+            </button>
+        </div>
+
+        <!-- Agent Section -->
+        <div class="p-6 border-t border-white/5 bg-indigo-900/5">
+            <h3 class="text-indigo-300 font-bold mb-4 flex items-center gap-2 text-lg">
+                <span class="text-xl">🤖</span> Email Agent
+            </h3>
+
+            <div class="flex flex-wrap gap-3 mb-6">
+                <button (click)="askAgent('Summarize this email')"
+                    class="px-4 py-2 bg-indigo-500/10 border border-indigo-500/20 text-indigo-200 rounded-lg hover:bg-indigo-500/20 transition-colors text-sm font-medium">
+                    Summarize this email
+                </button>
+                <button (click)="askAgent('What tasks do I need to do?')"
+                    class="px-4 py-2 bg-indigo-500/10 border border-indigo-500/20 text-indigo-200 rounded-lg hover:bg-indigo-500/20 transition-colors text-sm font-medium">
+                    What tasks do I need to do?
+                </button>
+                <button (click)="askAgent('Draft a reply based on my tone')"
+                    class="px-4 py-2 bg-indigo-500/10 border border-indigo-500/20 text-indigo-200 rounded-lg hover:bg-indigo-500/20 transition-colors text-sm font-medium">
+                    Draft a reply based on my tone
+                </button>
+                <button (click)="askAgent('Show me all urgent emails')"
+                    class="px-4 py-2 bg-indigo-500/10 border border-indigo-500/20 text-indigo-200 rounded-lg hover:bg-indigo-500/20 transition-colors text-sm font-medium">
+                    Show me all urgent emails
+                </button>
+            </div>
+
+            @if (isAgentLoading) {
+            <div class="flex items-center gap-3 text-indigo-300/70 animate-pulse">
+                <div class="w-4 h-4 border-2 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin"></div>
+                Thinking...
+            </div>
+            }
+
+            @if (agentResponse) {
+            <div
+                class="p-4 bg-black/30 rounded-lg border border-white/10 text-zinc-300 whitespace-pre-wrap font-mono text-sm leading-relaxed animate-fade-in">
+                {{ agentResponse }}
+            </div>
+            }
+        </div>
+    </div>
+    } @else {
+    <div class="text-center py-20 text-zinc-500">
+        Email not found in the archives.
+    </div>
+    }
+
+    <app-compose-modal [isOpen]="isComposeOpen" [loading]="isDrafting" [recipient]="draftRecipient"
+        [subject]="draftSubject" [body]="draftBody" (closeEvent)="closeCompose()" (sendEvent)="sendReply($event)">
+    </app-compose-modal>
+</div>

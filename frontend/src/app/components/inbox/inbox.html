@@ -1,0 +1,95 @@
+<div class="p-8 max-w-7xl mx-auto">
+    <!-- Header -->
+    <header class="mb-10 flex justify-between items-end animate-fade-in">
+        <div>
+            <h2 class="text-4xl font-bold text-white tracking-tight mb-2">Inbox</h2>
+            <p class="text-zinc-400 text-lg">Manage your communications efficiently.</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <button (click)="loadEmails()"
+                class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-all duration-300 border border-white/5 hover:border-white/10 group">
+                <span class="group-hover:rotate-180 transition-transform duration-500 block">↻</span>
+            </button>
+            <button (click)="openCompose()"
+                class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium transition-all duration-300 border border-white/10 flex items-center gap-2">
+                <span>✏️</span> Compose
+            </button>
+            <button (click)="processAll()"
+                class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium transition-all duration-300 shadow-lg shadow-indigo-500/20 flex items-center gap-2">
+                <span>✨</span> Process Inbox
+            </button>
+        </div>
+    </header>
+
+    @if (error) {
+    <div class="p-4 mb-6 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400">
+        {{ error }}
+    </div>
+    }
+
+    <!-- Email List -->
+    <div class="space-y-4">
+        @if (loading) {
+        <div class="p-20 text-center">
+            <div
+                class="w-16 h-16 border-4 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin mx-auto mb-6">
+            </div>
+            <p class="text-zinc-400 animate-pulse">Syncing with neural network...</p>
+        </div>
+        } @else {
+        @for (email of emails; track email.id) {
+        <a [routerLink]="['/email', email.id]"
+            class="block bg-surface-card border border-white/5 rounded-2xl p-5 hover:bg-surface-hover hover:border-white/10 hover:translate-x-1 transition-all duration-300 group animate-slide-up cursor-pointer relative overflow-hidden">
+
+            <!-- Hover Gradient -->
+            <div
+                class="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+            </div>
+
+            <div class="relative z-10 flex items-start justify-between gap-6">
+                <!-- Left: Icon & Content -->
+                <div class="flex-1 min-w-0 flex gap-5">
+                    <!-- Sender Avatar -->
+                    <div
+                        class="w-12 h-12 rounded-full bg-gradient-to-br from-zinc-800 to-zinc-900 border border-white/10 flex items-center justify-center text-lg font-bold text-zinc-400 group-hover:text-white group-hover:border-indigo-500/50 transition-colors duration-300 shrink-0 shadow-inner">
+                        {{ email.sender[0].toUpperCase() }}
+                    </div>
+
+                    <div class="min-w-0 flex-1">
+                        <div class="flex items-center gap-3 mb-1">
+                            <span
+                                class="font-semibold text-zinc-200 text-lg truncate group-hover:text-indigo-400 transition-colors">{{
+                                email.sender }}</span>
+                            @if (!email.read) {
+                            <span
+                                class="w-2.5 h-2.5 bg-indigo-500 rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)] animate-pulse"></span>
+                            }
+                            <span class="text-sm text-zinc-500 ml-auto font-medium">{{ email.timestamp | date:'short'
+                                }}</span>
+                        </div>
+                        <h3
+                            class="text-zinc-300 font-medium truncate mb-1.5 text-base group-hover:text-white transition-colors">
+                            {{ email.subject }}</h3>
+                        <p class="text-zinc-500 text-sm truncate group-hover:text-zinc-400 transition-colors">{{
+                            email.body }}</p>
+                    </div>
+                </div>
+
+                <!-- Right: Category Badge -->
+                @if (email.category) {
+                <span
+                    class="px-3 py-1.5 bg-white/5 border border-white/5 text-zinc-400 text-xs font-medium rounded-lg whitespace-nowrap group-hover:bg-indigo-500/10 group-hover:text-indigo-300 group-hover:border-indigo-500/20 transition-all duration-300">
+                    {{ email.category }}
+                </span>
+                }
+            </div>
+        </a>
+        }
+        }
+    </div>
+
+    <app-compose-modal [isOpen]="isComposeOpen" [recipient]="draftRecipient" [subject]="draftSubject" [body]="draftBody"
+        [isAiLoading]="isDrafting" (closeEvent)="closeCompose()" (sendEvent)="sendEmail($event)"
+        (aiGenerateEvent)="handleAiGenerate($event)">
+    </app-compose-modal>
+</div>

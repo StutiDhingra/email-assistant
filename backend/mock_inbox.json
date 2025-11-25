@@ -4,119 +4,149 @@
     "sender": "boss@company.com",
     "subject": "Urgent: Q4 Report",
     "body": "Hi, I need the Q4 report by EOD tomorrow. Please prioritize this.",
-    "timestamp": "2023-10-27T09:00:00Z",
-    "read": false
+    "timestamp": "2023-10-27 09:00:00+00:00",
+    "read": false,
+    "category": "To-Do",
+    "action_items": []
   },
   {
     "id": "2",
     "sender": "newsletter@techweekly.com",
     "subject": "Tech Weekly: AI Revolution",
     "body": "Top stories this week: AI is changing everything...",
-    "timestamp": "2023-10-27T10:00:00Z",
-    "read": true
+    "timestamp": "2023-10-27 10:00:00+00:00",
+    "read": true,
+    "category": "Newsletter",
+    "action_items": []
   },
   {
     "id": "3",
     "sender": "spam@offers.com",
     "subject": "You won a prize!",
     "body": "Click here to claim your prize now!",
-    "timestamp": "2023-10-27T11:00:00Z",
-    "read": false
+    "timestamp": "2023-10-27 11:00:00+00:00",
+    "read": false,
+    "category": "Spam",
+    "action_items": []
   },
   {
     "id": "4",
     "sender": "colleague@company.com",
     "subject": "Lunch?",
     "body": "Hey, want to grab lunch at 12?",
-    "timestamp": "2023-10-27T11:30:00Z",
-    "read": true
+    "timestamp": "2023-10-27 11:30:00+00:00",
+    "read": true,
+    "category": "To-Do",
+    "action_items": []
   },
   {
     "id": "5",
     "sender": "client@client.com",
     "subject": "Project Update",
     "body": "Here is the latest update on the project. We are on track.",
-    "timestamp": "2023-10-27T14:00:00Z",
-    "read": false
+    "timestamp": "2023-10-27 14:00:00+00:00",
+    "read": false,
+    "category": "Newsletter",
+    "action_items": []
   },
   {
     "id": "6",
     "sender": "hr@company.com",
     "subject": "Open Enrollment",
     "body": "It's time to select your benefits for next year.",
-    "timestamp": "2023-10-26T09:00:00Z",
-    "read": true
+    "timestamp": "2023-10-26 09:00:00+00:00",
+    "read": true,
+    "category": "To-Do",
+    "action_items": []
   },
   {
     "id": "7",
     "sender": "recruiter@linkedin.com",
     "subject": "Job Opportunity",
     "body": "I saw your profile and thought you'd be a great fit...",
-    "timestamp": "2023-10-26T15:00:00Z",
-    "read": false
+    "timestamp": "2023-10-26 15:00:00+00:00",
+    "read": false,
+    "category": "Spam",
+    "action_items": []
   },
   {
     "id": "8",
     "sender": "jira@company.com",
     "subject": "[JIRA] New Ticket Assigned",
     "body": "You have been assigned ticket PROJ-123.",
-    "timestamp": "2023-10-26T16:00:00Z",
-    "read": true
+    "timestamp": "2023-10-26 16:00:00+00:00",
+    "read": true,
+    "category": "To-Do",
+    "action_items": []
   },
   {
     "id": "9",
     "sender": "amazon@orders.com",
     "subject": "Your order has shipped",
     "body": "Your package will arrive tomorrow.",
-    "timestamp": "2023-10-25T10:00:00Z",
-    "read": true
+    "timestamp": "2023-10-25 10:00:00+00:00",
+    "read": true,
+    "category": "To-Do",
+    "action_items": []
   },
   {
     "id": "10",
     "sender": "mom@family.com",
     "subject": "Weekend plans",
     "body": "Are you coming home this weekend?",
-    "timestamp": "2023-10-25T18:00:00Z",
-    "read": false
+    "timestamp": "2023-10-25 18:00:00+00:00",
+    "read": false,
+    "category": "To-Do",
+    "action_items": []
   },
   {
     "id": "11",
     "sender": "team@slack.com",
     "subject": "New login from new device",
     "body": "We noticed a new login...",
-    "timestamp": "2023-10-24T08:00:00Z",
-    "read": true
+    "timestamp": "2023-10-24 08:00:00+00:00",
+    "read": true,
+    "category": "Important",
+    "action_items": []
   },
   {
     "id": "12",
     "sender": "billing@saas.com",
     "subject": "Invoice #1023",
     "body": "Your invoice for October is ready.",
-    "timestamp": "2023-10-24T09:00:00Z",
-    "read": false
+    "timestamp": "2023-10-24 09:00:00+00:00",
+    "read": false,
+    "category": "To-Do",
+    "action_items": []
   },
   {
     "id": "13",
     "sender": "event@meetup.com",
     "subject": "Reminder: Python Meetup",
     "body": "Don't forget the meetup tonight!",
-    "timestamp": "2023-10-24T12:00:00Z",
-    "read": true
+    "timestamp": "2023-10-24 12:00:00+00:00",
+    "read": true,
+    "category": "To-Do",
+    "action_items": []
   },
   {
     "id": "14",
     "sender": "support@github.com",
     "subject": "Security Alert",
     "body": "We found a vulnerability in your repo.",
-    "timestamp": "2023-10-23T14:00:00Z",
-    "read": false
+    "timestamp": "2023-10-23 14:00:00+00:00",
+    "read": false,
+    "category": "Important",
+    "action_items": []
   },
   {
     "id": "15",
     "sender": "marketing@tool.com",
     "subject": "Black Friday Sale",
     "body": "Get 50% off everything!",
-    "timestamp": "2023-10-23T16:00:00Z",
-    "read": true
+    "timestamp": "2023-10-23 16:00:00+00:00",
+    "read": true,
+    "category": "Spam",
+    "action_items": []
   }
 ]

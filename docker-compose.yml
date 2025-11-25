@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: email-assistant-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+    volumes:
+      # Persist data
+      - ./backend/prompts.json:/app/prompts.json
+      - ./backend/mock_inbox.json:/app/mock_inbox.json
+
+  frontend:
+    build: ./frontend
+    container_name: email-assistant-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend

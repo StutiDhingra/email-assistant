@@ -12,6 +12,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from app.api import emails, prompts, chat
+
+app.include_router(emails.router, prefix="/api/emails", tags=["emails"])
+app.include_router(prompts.router, prefix="/api/prompts", tags=["prompts"])
+app.include_router(chat.router, prefix="/api/chat", tags=["chat"])
+
 @app.get("/")
 def read_root():
     return {"message": "Email Productivity Agent API is running"}

@@ -1,0 +1,68 @@
+<div
+    class="flex flex-col h-[calc(100vh-2rem)] max-w-5xl mx-auto bg-surface-card border border-white/5 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-sm m-4 animate-fade-in">
+    <!-- Header -->
+    <header class="p-6 border-b border-white/5 bg-white/5 flex justify-between items-center">
+        <div>
+            <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+                <span
+                    class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-xl shadow-lg shadow-indigo-500/20">🤖</span>
+                Agent Chat
+            </h2>
+            <p class="text-zinc-400 text-sm ml-14">Your AI assistant for inbox management.</p>
+        </div>
+    </header>
+
+    <!-- Messages -->
+    <div class="flex-1 overflow-y-auto p-6 space-y-6 bg-black/20 scroll-smooth" #scrollContainer>
+        @for (msg of messages; track $index) {
+        <div class="flex gap-4 animate-slide-up" [class.flex-row-reverse]="msg.role === 'user'">
+            <!-- Avatar -->
+            <div class="w-10 h-10 rounded-full flex items-center justify-center text-lg shrink-0 shadow-lg"
+                [class.bg-indigo-600]="msg.role === 'user'" [class.text-white]="msg.role === 'user'"
+                [class.bg-zinc-800]="msg.role === 'agent'" [class.text-zinc-300]="msg.role === 'agent'"
+                [class.border]="msg.role === 'agent'" [class.border-white-10]="msg.role === 'agent'">
+                {{ msg.role === 'user' ? '👤' : '🤖' }}
+            </div>
+
+            <!-- Bubble -->
+            <div class="max-w-[80%] rounded-2xl p-4 shadow-md" [class.bg-indigo-600]="msg.role === 'user'"
+                [class.text-white]="msg.role === 'user'" [class.rounded-tr-none]="msg.role === 'user'"
+                [class.bg-zinc-800]="msg.role === 'agent'" [class.text-zinc-200]="msg.role === 'agent'"
+                [class.border]="msg.role === 'agent'" [class.border-white-5]="msg.role === 'agent'"
+                [class.rounded-tl-none]="msg.role === 'agent'">
+                <div class="prose prose-invert prose-sm max-w-none leading-relaxed">
+                    {{ msg.content }}
+                </div>
+            </div>
+        </div>
+        }
+
+        @if (loading) {
+        <div class="flex gap-4 animate-pulse">
+            <div
+                class="w-10 h-10 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center text-lg shrink-0">
+                🤖
+            </div>
+            <div
+                class="bg-zinc-800 border border-white/5 rounded-2xl p-4 shadow-sm rounded-tl-none flex items-center gap-2">
+                <div class="w-2 h-2 bg-zinc-400 rounded-full animate-bounce"></div>
+                <div class="w-2 h-2 bg-zinc-400 rounded-full animate-bounce delay-75"></div>
+                <div class="w-2 h-2 bg-zinc-400 rounded-full animate-bounce delay-150"></div>
+            </div>
+        </div>
+        }
+    </div>
+
+    <!-- Input -->
+    <div class="p-6 bg-white/5 border-t border-white/5 backdrop-blur-md">
+        <form (ngSubmit)="sendMessage()" class="flex gap-4 relative">
+            <input type="text" [(ngModel)]="newMessage" name="message" placeholder="Ask me anything about your inbox..."
+                class="flex-1 rounded-xl bg-black/30 border-white/10 text-white placeholder-zinc-500 shadow-inner focus:border-indigo-500/50 focus:ring-indigo-500/20 focus:bg-black/50 px-5 py-4 transition-all duration-300"
+                [disabled]="loading">
+            <button type="submit" [disabled]="!newMessage.trim() || loading"
+                class="px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-500 font-medium transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 hover:scale-105 active:scale-95">
+                <span>Send</span> 🚀
+            </button>
+        </form>
+    </div>
+</div>

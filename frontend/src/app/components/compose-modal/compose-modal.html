@@ -1,0 +1,61 @@
+<div *ngIf="isOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" (click)="close()"></div>
+
+    <!-- Modal -->
+    <div
+        class="relative w-full max-w-2xl bg-bg-secondary border border-white/10 rounded-2xl shadow-2xl flex flex-col max-h-[90vh] animate-slide-up">
+        <!-- Header -->
+        <div class="p-6 border-b border-white/5 flex justify-between items-center bg-white/5 rounded-t-2xl">
+            <h3 class="text-xl font-bold text-white">Compose Reply</h3>
+            <button (click)="close()" class="text-zinc-400 hover:text-white transition-colors">✕</button>
+        </div>
+
+        <!-- Body -->
+        <div class="p-6 overflow-y-auto flex-1 space-y-4">
+            @if (loading) {
+            <div class="flex flex-col items-center justify-center py-12 space-y-4">
+                <div class="w-10 h-10 border-4 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin">
+                </div>
+                <p class="text-zinc-400 animate-pulse">Drafting response with AI...</p>
+            </div>
+            } @else {
+            <div class="space-y-2">
+                <label class="text-xs font-medium text-zinc-500 uppercase tracking-wider">To</label>
+                <input type="text" [value]="recipient" readonly
+                    class="w-full bg-black/20 border border-white/5 rounded-lg px-4 py-2 text-zinc-300 focus:outline-none">
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-xs font-medium text-zinc-500 uppercase tracking-wider">Subject</label>
+                <input type="text" [(ngModel)]="subject"
+                    class="w-full bg-black/20 border border-white/5 rounded-lg px-4 py-2 text-zinc-300 focus:outline-none focus:border-indigo-500/50 transition-colors">
+            </div>
+
+            <div class="space-y-2 flex-1">
+                <label class="text-xs font-medium text-zinc-500 uppercase tracking-wider">Message</label>
+                <textarea [(ngModel)]="body" rows="12"
+                    class="w-full bg-black/20 border border-white/5 rounded-lg px-4 py-3 text-zinc-300 focus:outline-none focus:border-indigo-500/50 transition-colors resize-none font-mono text-sm leading-relaxed"></textarea>
+            </div>
+            <div class="flex gap-2">
+                <input type="text" [(ngModel)]="aiInstructions" placeholder="e.g. Ask for a sick leave tomorrow..."
+                    class="flex-1 bg-black/20 border border-indigo-500/30 rounded-lg px-4 py-2 text-zinc-300 focus:outline-none focus:border-indigo-500/50 placeholder-indigo-500/30">
+                <button (click)="generate()" [disabled]="!aiInstructions || isAiLoading"
+                    class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-medium transition-all disabled:opacity-50 flex items-center gap-2">
+                    @if (isAiLoading) { <span class="animate-spin">⏳</span> } @else { <span>⚡</span> Auto-Write }
+                </button>
+            </div>
+            }
+        </div>
+
+        <!-- Footer -->
+        <div class="p-6 border-t border-white/5 bg-black/20 rounded-b-2xl flex justify-end gap-3">
+            <button (click)="close()"
+                class="px-5 py-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 transition-all">Cancel</button>
+            <button (click)="send()" [disabled]="loading"
+                class="px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-medium shadow-lg shadow-indigo-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+                <span>🚀</span> Send Reply
+            </button>
+        </div>
+    </div>
+</div>
