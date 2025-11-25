@@ -24,7 +24,7 @@ export interface Prompt {
     providedIn: 'root'
 })
 export class ApiService {
-    private apiUrl = '/api';
+    private apiUrl = 'https://email-assistant-production-7818.up.railway.app/api';
 
     constructor(private http: HttpClient) { }
 
