@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+langchain
+langchain-groq
+langchain-community
+chromadb
+sqlalchemy
+pydantic
+python-multipart
+python-dotenv
+httpx
