@@ -1,6 +1,6 @@
 {
     "/api": {
-        "target": "private apiUrl = 'https://email-assistant-production-7818.up.railway.app/api';",
+        "target": "https://email-assistant-production-7818.up.railway.app/api",
         "secure": false
     }
 }
